@@ -5,11 +5,17 @@ const PDFDocument = require("pdfkit");
 class PDFDocumentWithTables extends PDFDocument {
   constructor(options) {
     super(options);
+    this.page.margins.top = 0;
+    this.page.margins.left = 0;
+    this.page.margins.right = 0;
+    this.page.margins.bottom = 0;
   }
 
   table(table, arg0, arg1, arg2) {
     let startX = this.page.margins.left,
       startY = this.y;
+    console.log("startX", startX);
+    console.log("startY", startY);
     let options = {};
 
     if (typeof arg0 === "number" && typeof arg1 === "number") {
@@ -19,6 +25,7 @@ class PDFDocumentWithTables extends PDFDocument {
       if (typeof arg2 === "object") options = arg2;
     } else if (typeof arg0 === "object") {
       options = arg0;
+      console.log(options);
     }
 
     const columnCount = table.headers.length;
@@ -28,6 +35,7 @@ class PDFDocumentWithTables extends PDFDocument {
       options.width ||
       this.page.width - this.page.margins.left - this.page.margins.right;
 
+    // Prepare Header
     const prepareHeader = options.prepareHeader || (() => {});
     const prepareRow = options.prepareRow || (() => {});
     const computeRowHeight = (row) => {
