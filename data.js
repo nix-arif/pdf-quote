@@ -1,4 +1,4 @@
-export const quote = {
+const quote = {
   customer: {
     name: "Matron Lelah",
     address: "Persiaran Kayangan, Seksyen 7, 40000b Shah Alam, Selangor",
@@ -71,3 +71,5 @@ export const quote = {
     },
   ],
 };
+
+module.exports = quote;
