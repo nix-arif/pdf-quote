@@ -26,6 +26,9 @@ class PDFDocumentWithTables extends PDFDocument {
 			options.width ||
 			this.page.width - this.page.margins.left - this.page.margins.right;
 
+		// Custom
+		const tablePadding = options.tablePadding || 10;
+
 		// Prepare Header
 		const prepareHeader = options.prepareHeader || (() => {});
 		const prepareRow = options.prepareRow || (() => {});
@@ -67,10 +70,15 @@ class PDFDocumentWithTables extends PDFDocument {
 				startY + columnContainerWidth,
 				1
 			);
-			this.text(header, startX + i * columnContainerWidth, startY, {
-				width: columnWidth,
-				align: 'left',
-			});
+			this.text(
+				header,
+				startX + tablePadding + i * columnContainerWidth,
+				startY + tablePadding,
+				{
+					width: columnWidth,
+					align: 'left',
+				}
+			);
 		});
 	}
 }
