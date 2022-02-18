@@ -13,7 +13,16 @@ const doc = new PDFDocument(configuration);
 doc.pipe(fs.createWriteStream('hello.pdf'));
 
 const table0 = {
-	headers: ['No', 'Product Code', 'Description', 'Qty', 'OUM', 'Price'],
+	headers: [
+		'No',
+		'Product Code',
+		'Description',
+		'Qty',
+		'OUM',
+		'Price',
+		'Total Price',
+	],
+	// headers: ['No', 'Product Code'],
 	rows: data.items.map((item) => {
 		const { no, productCode, desc, qty, oum, price } = item;
 		return [no, productCode.trim(), desc.trim(), qty, oum.trim(), price];

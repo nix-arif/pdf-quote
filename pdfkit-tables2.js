@@ -6,20 +6,19 @@ const PDFDocument = require('pdfkit');
 class PDFDocumentWithTables extends PDFDocument {
 	constructor(options) {
 		super(options);
-		console.log(options);
 	}
 
 	// method table
 	table(table, arg0, arg1, arg2) {
 		let startX = this.page.margins.top,
 			startY = this.y;
-		let pageWidth = this.page.width;
-		console.log(this.y);
+
 		let options = {};
-		console.log(pageWidth);
 
 		// check the options
 
+		this.page.margins = { top: 72, left: 72, right: 72, bottom: 72 };
+		(startX = this.page.margins.top), (startY = this.page.margins.top);
 		const columnCount = table.headers.length;
 		const columnSpacing = options.columnsSpacing || 15;
 		const rowSpacing = options.rowSpacing || 5;
@@ -42,29 +41,33 @@ class PDFDocumentWithTables extends PDFDocument {
 		};
 
 		const drawBox = (x1, y1, x2, y2, width) => {
-			this.text(`[${Math.round(x1)}, ${Math.round(y1)}]`, x1, y1);
-			this.text(`[${Math.round(x2)}, ${Math.round(y1)}]`, x2, y1);
-			this.text(`[${Math.round(x2)}, ${Math.round(y2)}]`, x2, y2);
-			this.text(`[${Math.round(x1)}, ${Math.round(y2)}]`, x1, y2);
-			this.polygon([x1, y1], [x2, y1], [y2, y2], [x1, y2]).lineWidth(width);
+			// console.log(`[${Math.round(x1)}, ${Math.round(y1)}]`);
+			// console.log(`[${Math.round(x2)}, ${Math.round(y1)}]`);
+			// console.log(`[${Math.round(x2)}, ${Math.round(y2)}]`);
+			// console.log(`[${Math.round(x1)}, ${Math.round(y2)}]`);
+			// console.log('-----------------------------------------');
+
+			// this.text(`x1, y1 [${Math.round(x1)}, ${Math.round(y1)}]`, x1, y1);
+			// this.text(`x2, y1 [${Math.round(x2)}, ${Math.round(y1)}]`, x2, y1);
+			// this.text(`x2, y2 [${Math.round(x2)}, ${Math.round(y2)}]`, x2, y2);
+			// this.text(`x1, y2 [${Math.round(x1)}, ${Math.round(y2)}]`, x1, y2);
+			this.polygon([x1, y1], [x2, y1], [x2, y2], [x1, y2]).lineWidth(width);
 			this.stroke();
 		};
 
 		// drawLineAbove(0, 20, 595.28, 20, 5);
 
 		// Set the page margins
-		this.page.margins = { top: 72, left: 72, right: 72, bottom: 72 };
-		(startX = this.page.margins.top), (startY = this.page.margins.top);
 
 		table.headers.forEach((header, i) => {
 			drawBox(
 				startX + i * columnContainerWidth,
-				0,
-				startX + i * columnContainerWidth,
 				startY,
+				startX + (i + 1) * columnContainerWidth,
+				startY + columnContainerWidth,
 				1
 			);
-			this.text('', startX + i * columnContainerWidth, startY, {
+			this.text(header, startX + i * columnContainerWidth, startY, {
 				width: columnWidth,
 				align: 'left',
 			});
