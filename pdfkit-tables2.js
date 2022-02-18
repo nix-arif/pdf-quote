@@ -17,7 +17,7 @@ class PDFDocumentWithTables extends PDFDocument {
 
 		// check the options
 
-		this.page.margins = { top: 72, left: 72, right: 72, bottom: 72 };
+		this.page.margins = { top: 72, left: 72, right: 40, bottom: 72 };
 		(startX = this.page.margins.top), (startY = this.page.margins.top);
 		const columnCount = table.headers.length;
 		const columnSpacing = options.columnsSpacing || 15;
@@ -25,7 +25,7 @@ class PDFDocumentWithTables extends PDFDocument {
 		const usableWidth =
 			options.width ||
 			this.page.width - this.page.margins.left - this.page.margins.right;
-
+		console.log('usableWidth', usableWidth);
 		// Custom
 		const tablePadding = options.tablePadding || 10;
 
@@ -62,6 +62,8 @@ class PDFDocumentWithTables extends PDFDocument {
 
 		// Set the page margins
 
+		this.font('Courier-Bold');
+		this.fontSize(12);
 		table.headers.forEach((header, i) => {
 			drawBox(
 				startX + i * columnContainerWidth,
