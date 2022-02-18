@@ -1,15 +1,19 @@
 {
-  "name": "pdf-quote",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "pdfkit": "^0.13.0"
-  }
+	"name": "pdf-quote",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"dev": "nodemon express-app.js"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"express": "^4.17.3",
+		"flatted": "^3.2.5",
+		"nodemon": "^2.0.15",
+		"pdfkit": "^0.13.0"
+	}
 }
