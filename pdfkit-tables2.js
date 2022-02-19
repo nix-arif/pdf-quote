@@ -35,7 +35,8 @@ class PDFDocumentWithTables extends PDFDocument {
 
 		const columnContainerWidth = usableWidth / columnCount;
 		const columnWidth = columnContainerWidth - columnSpacing;
-		console.log('columnWidth:', columnWidth);
+
+		const computeRowHeight = (row) => {};
 
 		prepareHeader();
 
