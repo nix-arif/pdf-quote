@@ -1,16 +1,29 @@
 'use strict';
 
 const fs = require('fs');
-const PDFDocument = require('./pdfkit-tables');
-// const PDFDocument = PDFDocumentFile.PDFDocumentWithTables;
-const doc = new PDFDocument();
+const PDFDocument = require('pdfkit-table');
 
 const data = require('./data');
+const doc = new PDFDocument({ margin: 30, size: 'A4' });
+
 // const { no, productCode, qty, oum, price } = data.items;
 
 doc.pipe(fs.createWriteStream('example.pdf'));
 
+const { name, address, department } = data.customer;
+
+doc.text(`${name}, (${department})`);
+doc.text(`
+${address}, 
+(${department})
+`);
+const prevX = doc.x;
+doc.text(new Date(), 400, doc.y, { align: 'right' });
+
+doc.x = prevX;
+
 const table0 = {
+	// title: 'Quotation',
 	headers: ['No', 'Product Code', 'Description', 'Qty', 'OUM', 'Price'],
 	rows: data.items.map((item) => {
 		const { no, productCode, desc, qty, oum, price } = item;
@@ -18,24 +31,7 @@ const table0 = {
 	}),
 };
 
-doc.table(table0, {
-	prepareHeader: () => doc.font('Helvetica-Bold'),
-	prepareRow: (row, i) => doc.font('Helvetica').fontSize(9),
-	columnSpacing: 5,
-	//   margins: { top: 0, left: 0, right: 0, bottom: 0 },
-});
-
-console.log('Hello', thisdot);
-console.log('this.y', doc.y);
-
-const table1 = {
-	headers: ['Country', 'Conversion rate', 'Trend'],
-	rows: [
-		['Switzerland', '12%', '+1.12%'],
-		['France', '67%', '-0.98%'],
-		['England', '33%', '+4.44%'],
-	],
-};
+doc.table(table0, () => {});
 
 // doc.moveDown().table(table1, 100, 350, { width: 300 });
 
